@@ -281,7 +281,7 @@ class ZmqOpenAIServing(OpenAIServing):
             # if self.engine_client.check_model_weight_status():
             #     raise ValueError("Engine is clearing model weight")
             while num_choices > 0:
-                request_output_dicts = await asyncio.wait_for(request_output_queue.get(), timeout=60)
+                request_output_dicts = await asyncio.wait_for(request_output_queue.get(), timeout=self.max_waiting_time)
                 for request_output_dict in request_output_dicts:
                     api_server_logger.debug(f"Received RequestOutput: {request_output_dict}")
                     if request_output_dict["finished"] is True:
